@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_clean_architecture_bloc/core/error/firebase_exception_mapper.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/error/exceptions.dart' as exception;
 import 'package:flutter_clean_architecture_bloc/features/auth/data/models/user_model.dart';
@@ -57,7 +58,7 @@ class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
         json: userFirestore.data()!,
       );
     } on FirebaseAuthException catch (e) {
-      _mapFirebaseException(e);
+      e.toAppException();
     } catch (e) {
       throw exception.FirebaseAuthException(message: 'Unknown Error');
     }
@@ -82,7 +83,7 @@ class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
 
       return UserModel(uid: credential.user!.uid, email: email, name: name);
     } on FirebaseAuthException catch (e) {
-      _mapFirebaseException(e);
+      e.toAppException();
     } catch (e) {
       throw exception.FirebaseAuthException(message: "Unknown Error");
     }
@@ -113,42 +114,9 @@ class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
 
       return UserModel.fromJsonId(uid: uid, json: user.data()!);
     } on FirebaseAuthException catch (e) {
-      _mapFirebaseException(e);
+      e.toAppException();
     } catch (e) {
       throw exception.FirebaseAuthException(message: "Unknown Error");
-    }
-  }
-
-  Never _mapFirebaseException(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'invalid-email':
-        throw exception.UserNotFoundException(
-          message: 'Email format is not correct.',
-        );
-      case 'user-not-found':
-        throw exception.UserNotFoundException(
-          message: 'No user found with this email.',
-        );
-      case 'wrong-password':
-      case 'invalid-credential':
-        throw exception.WrongPasswordException(
-          message: 'Incorrect email or password.',
-        );
-      case 'email-already-in-use':
-        throw exception.EmailAlreadyInUseException(
-          message: 'This email is already registered.',
-        );
-      case 'weak-password':
-        throw exception.WeakPasswordException(
-          message: 'Password is too weak. Minimum 6 characters.',
-        );
-      case 'network-request-failed':
-        throw exception.NetworkException(message: 'No internet connection.');
-      default:
-        throw exception.FirebaseAuthException(
-          message: e.message ?? 'Authentication failed.',
-          code: e.code,
-        );
     }
   }
 }

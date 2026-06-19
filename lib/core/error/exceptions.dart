@@ -34,3 +34,53 @@ class NetworkException implements Exception {
 
   NetworkException({required this.message});
 }
+
+class PermissionDeniedException implements Exception {
+  final String message;
+  const PermissionDeniedException({required this.message});
+}
+
+class DocumentNotFoundException implements Exception {
+  final String message;
+  const DocumentNotFoundException({required this.message});
+}
+
+class DocumentAlreadyExistsException implements Exception {
+  final String message;
+  const DocumentAlreadyExistsException({required this.message});
+}
+
+class FailedPreconditionException implements Exception {
+  final String message;
+  const FailedPreconditionException({required this.message});
+}
+
+class OperationAbortedException implements Exception {
+  final String message;
+  const OperationAbortedException({required this.message});
+}
+
+class TimeoutException implements Exception {
+  final String message;
+  const TimeoutException({required this.message});
+}
+
+class OperationCancelledException implements Exception {
+  final String message;
+  const OperationCancelledException({required this.message});
+}
+
+class ResourceExhaustedException implements Exception {
+  final String message;
+  const ResourceExhaustedException({required this.message});
+}
+
+class UnauthenticatedException implements Exception {
+  final String message;
+  const UnauthenticatedException({required this.message});
+}
+
+class FirebaseFirestoreException implements Exception {
+  final String message;
+  const FirebaseFirestoreException({required this.message});
+}

@@ -8,6 +8,6 @@ sealed class AuthState with _$AuthState {
   const factory AuthState.authenticated({required UserEntity user}) =
       AuthAuthenticated;
   const factory AuthState.unauthenticated() = Unauthenticated;
-  const factory AuthState.failure(String message) = Failure;
+  const factory AuthState.failure(String message) = AuthFailure;
   const factory AuthState.loading() = AuthLoading;
 }

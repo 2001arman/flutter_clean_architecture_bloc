@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart' as fb;
 import 'package:flutter_clean_architecture_bloc/features/auth/domain/entities/user_entity.dart';
 
 class UserModel {
@@ -7,14 +6,6 @@ class UserModel {
   final String name;
 
   UserModel({required this.uid, required this.email, required this.name});
-
-  factory UserModel.fromFirebase(fb.User user) {
-    return UserModel(
-      uid: user.uid,
-      email: user.email ?? '',
-      name: user.displayName ?? '',
-    );
-  }
 
   factory UserModel.fromJsonId({
     required String uid,

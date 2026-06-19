@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/core/di/injection.dart';
 import 'package:flutter_clean_architecture_bloc/core/extentions/context_extension.dart';
+import 'package:flutter_clean_architecture_bloc/core/router/app_router.dart';
 import 'package:flutter_clean_architecture_bloc/features/home/presentation/bloc/user/user_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/features/home/presentation/bloc/user/user_event.dart';
+import 'package:go_router/go_router.dart';
 
 import '../bloc/user/user_state.dart';
 
@@ -48,6 +50,10 @@ class _HomeView extends StatelessWidget {
           ],
         ),
         body: Center(child: Text("Home Page Bosque")),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => context.push(Routes.contact),
+          child: Icon(Icons.add),
+        ),
       ),
     );
   }
