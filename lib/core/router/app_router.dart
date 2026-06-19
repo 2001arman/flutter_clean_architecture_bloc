@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/pages/register_page.dart';
+import 'package:flutter_clean_architecture_bloc/features/home/presentation/pages/home_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,6 +10,7 @@ abstract class Routes {
   static const splash = '/';
   static const login = '/login';
   static const register = '/register';
+  static const home = '/home';
 }
 
 @lazySingleton
@@ -23,11 +25,11 @@ class AppRouter {
     redirect: (context, state) {
       final isLoggedIn = _firebaseAuth.currentUser != null;
       final isOnAuthRoute =
-          state.matchedLocation == '/login' ||
-          state.matchedLocation == '/register';
+          state.matchedLocation == Routes.login ||
+          state.matchedLocation == Routes.register;
 
-      if (isLoggedIn && isOnAuthRoute) return '/home';
-      if (!isLoggedIn && !isOnAuthRoute) return '/login';
+      if (isLoggedIn && isOnAuthRoute) return Routes.home;
+      if (!isLoggedIn && !isOnAuthRoute) return Routes.login;
       return null;
     },
     routes: [
@@ -39,6 +41,7 @@ class AppRouter {
         path: Routes.register,
         builder: (context, state) => const RegisterPage(),
       ),
+      GoRoute(path: Routes.home, builder: (context, state) => const HomePage()),
     ],
   );
 }

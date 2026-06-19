@@ -6,7 +6,7 @@ part 'auth_state.freezed.dart';
 sealed class AuthState with _$AuthState {
   const factory AuthState.initial() = Initial;
   const factory AuthState.authenticated({required UserEntity user}) =
-      Authenticated;
+      AuthAuthenticated;
   const factory AuthState.unauthenticated() = Unauthenticated;
   const factory AuthState.failure(String message) = Failure;
   const factory AuthState.loading() = AuthLoading;

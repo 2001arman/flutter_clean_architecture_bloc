@@ -6,7 +6,7 @@ part 'user_entity.freezed.dart';
 abstract class UserEntity with _$UserEntity {
   const factory UserEntity({
     required String uid,
-    required String fullName,
+    required String name,
     required String email,
   }) = _UserEntity;
 }

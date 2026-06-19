@@ -4,18 +4,24 @@ import 'package:flutter_clean_architecture_bloc/features/auth/domain/entities/us
 class UserModel {
   final String uid;
   final String email;
-  final String fullName;
+  final String name;
 
-  UserModel({required this.uid, required this.email, required this.fullName});
+  UserModel({required this.uid, required this.email, required this.name});
 
   factory UserModel.fromFirebase(fb.User user) {
     return UserModel(
       uid: user.uid,
       email: user.email ?? '',
-      fullName: user.displayName ?? '',
+      name: user.displayName ?? '',
     );
   }
 
-  UserEntity toEntity() =>
-      UserEntity(uid: uid, fullName: fullName, email: email);
+  factory UserModel.fromJsonId({
+    required String uid,
+    required Map<String, dynamic> json,
+  }) {
+    return UserModel(uid: uid, email: json['email'], name: json['name']);
+  }
+
+  UserEntity toEntity() => UserEntity(uid: uid, name: name, email: email);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/core/di/injection.dart';
+import 'package:flutter_clean_architecture_bloc/core/extentions/context_extension.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_state.dart';
@@ -51,11 +52,9 @@ class _LoginViewState extends State<_LoginView> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           state.whenOrNull(
-            failure: (message) => ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(content: Text(message), backgroundColor: Colors.red),
-              ),
+            authenticated: (user) =>
+                context.showSuccessSnackBar("Usernya ada nih ${user.name}"),
+            failure: (message) => context.showErrorSnackBar(message),
           );
         },
         child: BlocBuilder<AuthBloc, AuthState>(

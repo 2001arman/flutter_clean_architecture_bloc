@@ -30,17 +30,21 @@ class AuthRepositoryImpl implements AuthRepository {
   });
 
   @override
-  Future<Either<Failure, Unit>> logout() {
-    throw UnimplementedError();
-  }
+  Future<Either<Failure, void>> logout() => handleExceptionAsync(() async {
+    return _dataSource.logout();
+  });
 
   @override
   Future<Either<Failure, UserEntity>> register({
     required String fullName,
     required String email,
     required String password,
-  }) {
-    // TODO: implement register
-    throw UnimplementedError();
-  }
+  }) => handleExceptionAsync(() async {
+    final model = await _dataSource.register(
+      name: fullName,
+      email: email,
+      password: password,
+    );
+    return model.toEntity();
+  });
 }

@@ -14,7 +14,7 @@ abstract class AuthRepository {
     required String password,
   });
 
-  Future<Either<Failure, Unit>> logout();
+  Future<Either<Failure, void>> logout();
 
   Either<Failure, UserEntity> getCurrentUser();
 

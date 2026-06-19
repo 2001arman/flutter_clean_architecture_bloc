@@ -7,12 +7,12 @@ class AuthEvent with _$AuthEvent {
     required String fullName,
     required String email,
     required String password,
-  }) = Register;
+  }) = RegisterEvent;
 
   const factory AuthEvent.login({
     required String email,
     required String password,
-  }) = Login;
+  }) = LoginEvent;
 
   const factory AuthEvent.logout() = Logout;
 
