@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/core/usecase/usecase.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/domain/usecase/login_use_case.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/usecase/logout_use_case.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/domain/usecase/register_use_case.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_event.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_state.dart';
@@ -11,13 +9,11 @@ import 'package:injectable/injectable.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase _loginUseCase;
   final RegisterUseCase _registerUseCase;
-  final LogoutUseCase _logoutUseCase;
 
-  AuthBloc(this._loginUseCase, this._registerUseCase, this._logoutUseCase)
+  AuthBloc(this._loginUseCase, this._registerUseCase)
     : super(AuthState.initial()) {
     on<LoginEvent>(_login);
     on<RegisterEvent>(_register);
-    on<Logout>(_logout);
     on<AuthCheck>(_authCheck);
   }
 
@@ -51,15 +47,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (failure) => emit(AuthState.failure(failure.message)),
       (user) => emit(AuthState.authenticated(user: user)),
-    );
-  }
-
-  void _logout(Logout event, Emitter<AuthState> emit) async {
-    final result = await _logoutUseCase(NoParams());
-
-    result.fold(
-      (failure) => emit(AuthState.failure(failure.message)),
-      (_) => emit(const AuthState.unauthenticated()),
     );
   }
 

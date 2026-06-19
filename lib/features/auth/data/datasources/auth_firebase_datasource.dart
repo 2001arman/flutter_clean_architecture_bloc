@@ -13,6 +13,8 @@ abstract class AuthFirebaseDataSource {
   });
 
   Future<void> logout();
+
+  Future<UserModel> getCurrentUser();
 }
 
 @LazySingleton(as: AuthFirebaseDataSource)
@@ -89,6 +91,32 @@ class AuthFirebaseDataSourceImpl implements AuthFirebaseDataSource {
   @override
   Future<void> logout() async {
     return _firebaseAuth.signOut();
+  }
+
+  @override
+  Future<UserModel> getCurrentUser() async {
+    try {
+      if (_firebaseAuth.currentUser == null) {
+        throw exception.UserNotFoundException(
+          message: "Current User Not Found",
+        );
+      }
+      final uid = _firebaseAuth.currentUser!.uid;
+
+      final user = await _firestore.collection('users').doc(uid).get();
+
+      if (_firebaseAuth.currentUser == null) {
+        throw exception.UserNotFoundException(
+          message: "Current User Not Found",
+        );
+      }
+
+      return UserModel.fromJsonId(uid: uid, json: user.data()!);
+    } on FirebaseAuthException catch (e) {
+      _mapFirebaseException(e);
+    } catch (e) {
+      throw exception.FirebaseAuthException(message: "Unknown Error");
+    }
   }
 
   Never _mapFirebaseException(FirebaseAuthException e) {

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/core/di/injection.dart';
 import 'package:flutter_clean_architecture_bloc/core/extentions/context_extension.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_event.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_state.dart';
+import 'package:flutter_clean_architecture_bloc/features/home/presentation/bloc/user/user_bloc.dart';
+import 'package:flutter_clean_architecture_bloc/features/home/presentation/bloc/user/user_event.dart';
+
+import '../bloc/user/user_state.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<AuthBloc>(),
+      create: (context) => getIt<UserBloc>()..add(UserEvent.loadCurrentUser()),
       child: _HomeView(),
     );
   }
@@ -23,20 +24,23 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
+    return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
         state.mapOrNull(
-          failure: (failure) => context.showErrorSnackBar(failure.message),
+          error: (failure) => context.showErrorSnackBar(failure.message),
         );
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Welcome Home Page"),
+          title: BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) => state.maybeWhen(
+              orElse: () => Text("Welcome"),
+              loaded: (user, _) => Text("Welcome ${user.name}"),
+            ),
+          ),
           actions: [
             IconButton(
-              onPressed: () {
-                context.read<AuthBloc>().add(AuthEvent.logout());
-              },
+              onPressed: () => context.read<UserBloc>().add(UserEvent.logout()),
               icon: Icon(Icons.logout),
               color: Colors.red,
             ),

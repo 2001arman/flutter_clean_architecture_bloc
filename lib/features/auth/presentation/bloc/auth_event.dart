@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'auth_event.freezed.dart';
 
 @freezed
-class AuthEvent with _$AuthEvent {
+sealed class AuthEvent with _$AuthEvent {
   const factory AuthEvent.register({
     required String fullName,
     required String email,
@@ -13,8 +13,6 @@ class AuthEvent with _$AuthEvent {
     required String email,
     required String password,
   }) = LoginEvent;
-
-  const factory AuthEvent.logout() = Logout;
 
   const factory AuthEvent.authCheck() = AuthCheck;
 }

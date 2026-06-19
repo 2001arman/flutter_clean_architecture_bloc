@@ -16,9 +16,12 @@ class AuthRepositoryImpl implements AuthRepository {
   Stream<UserEntity?> get authStateChange => throw UnimplementedError();
 
   @override
-  Either<Failure, UserEntity> getCurrentUser() {
-    throw UnimplementedError();
-  }
+  Future<Either<Failure, UserEntity>> getCurrentUser() async =>
+      handleExceptionAsync(() async {
+        final model = await _dataSource.getCurrentUser();
+
+        return model.toEntity();
+      });
 
   @override
   Future<Either<Failure, UserEntity>> login({
