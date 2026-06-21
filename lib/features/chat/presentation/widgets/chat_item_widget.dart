@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/extentions/date_extention.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../domain/entities/chat_room.dart';
+import '../bloc/user/user_bloc.dart';
+import '../bloc/user/user_state.dart';
 import 'avatar_widget.dart';
+import 'room_name_widget.dart';
 
 class ChatItemWidget extends StatelessWidget {
   const ChatItemWidget({super.key, required this.room, required this.onTap});
@@ -15,21 +19,22 @@ class ChatItemWidget extends StatelessWidget {
     final colors = context.appColors;
 
     return ListTile(
-      leading: AvatarWidget(displayName: room.participants.last.name),
+      leading: BlocBuilder<UserBloc, UserState>(
+        builder: (context, state) {
+          return state.maybeMap(
+            loaded: (loaded) {
+              String roomName = room.participants
+                  .firstWhere((data) => data != loaded.user)
+                  .name;
+              return AvatarWidget(displayName: roomName);
+            },
+            orElse: () => const SizedBox(),
+          );
+        },
+      ),
       title: Row(
         children: [
-          Expanded(
-            child: Text(
-              room.participants.last.name,
-              style: TextStyle(
-                color: colors.onSurface,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+          Expanded(child: RoomNameWidget(room: room)),
           Text(
             room.updatedAt.format(),
             style: TextStyle(color: colors.secondaryText, fontSize: 10),

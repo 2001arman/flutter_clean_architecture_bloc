@@ -1,29 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/theme/app_theme.dart';
+import '../../domain/entities/chat_room.dart';
+import '../bloc/user/user_bloc.dart';
+import '../bloc/user/user_state.dart';
 import 'avatar_widget.dart';
+import 'room_name_widget.dart';
 
 class RoomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const RoomAppBar({super.key, required this.name});
+  const RoomAppBar({super.key, required this.room});
 
-  final String name;
+  final ChatRoom room;
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.appColors;
     return AppBar(
       title: Row(
         children: [
-          AvatarWidget(size: 40, displayName: name),
-          const SizedBox(width: 12),
-          Text(
-            name,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: colors.onSurface,
-            ),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              return state.maybeMap(
+                loaded: (loaded) {
+                  String roomName = room.participants
+                      .firstWhere((data) => data != loaded.user)
+                      .name;
+                  return AvatarWidget(size: 40, displayName: roomName);
+                },
+                orElse: () => const SizedBox(),
+              );
+            },
           ),
+          const SizedBox(width: 12),
+          RoomNameWidget(room: room),
         ],
       ),
     );

@@ -6,6 +6,8 @@ import 'package:injectable/injectable.dart';
 
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
+import '../../features/chat/presentation/bloc/user/user_bloc.dart';
+import '../../features/chat/presentation/bloc/user/user_event.dart';
 import '../../features/contacts/presentation/pages/contact_page.dart';
 import '../../features/chat/domain/entities/chat_room.dart';
 import '../../features/chat/presentation/bloc/chat_room/chat_room_bloc.dart';
@@ -55,9 +57,18 @@ class AppRouter {
         ),
 
         ShellRoute(
-          builder: (context, state, child) => BlocProvider(
-            create: (context) =>
-                getIt<ChatRoomBloc>()..add(ChatRoomEvent.loadRooms()),
+          builder: (context, state, child) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    getIt<ChatRoomBloc>()..add(ChatRoomEvent.loadRooms()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    getIt<UserBloc>()..add(UserEvent.loadCurrentUser()),
+              ),
+            ],
+
             child: child,
           ),
           routes: [

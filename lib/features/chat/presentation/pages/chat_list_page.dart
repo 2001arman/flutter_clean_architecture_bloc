@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/di/injection.dart';
 import '../../../../core/extentions/context_extension.dart';
 import '../../../../core/router/app_router.dart';
 import '../bloc/chat_room/chat_room_bloc.dart';
@@ -15,18 +14,6 @@ import '../widgets/empty_chat_room_widget.dart';
 
 class ChatListPage extends StatelessWidget {
   const ChatListPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<UserBloc>()..add(UserEvent.loadCurrentUser()),
-      child: _HomeView(),
-    );
-  }
-}
-
-class _HomeView extends StatelessWidget {
-  const _HomeView();
 
   @override
   Widget build(BuildContext context) {
