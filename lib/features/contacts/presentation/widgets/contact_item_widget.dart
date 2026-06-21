@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../../auth/domain/entities/user_entity.dart';
-import '../../../home/presentation/widgets/avatar_widget.dart';
+import '../../../chat/presentation/widgets/avatar_widget.dart';
 
 class ContactItemWidget extends StatelessWidget {
   const ContactItemWidget({super.key, required this.user, required this.onTap});

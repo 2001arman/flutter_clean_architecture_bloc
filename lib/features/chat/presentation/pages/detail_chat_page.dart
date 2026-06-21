@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../home/domain/entities/chat_room.dart';
+import '../../domain/entities/chat_room.dart';
 import '../widgets/chat_input_bar.dart';
 import '../widgets/room_app_bar.dart';
 
-class RoomPage extends StatelessWidget {
-  const RoomPage({super.key, required this.room});
+class DetailChatPage extends StatelessWidget {
+  const DetailChatPage({super.key, required this.room});
   final ChatRoom room;
 
   @override

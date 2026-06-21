@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../bloc/contact_bloc.dart';
 import '../bloc/contact_event.dart';
-import 'contact_item_widget.dart';
+import '../widgets/contact_item_widget.dart';
 
 class ContactListView extends StatelessWidget {
   const ContactListView({super.key, required this.contacts});

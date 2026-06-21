@@ -6,6 +6,7 @@ import '../../../../core/error/failures.dart';
 import '../../../auth/data/models/user_model.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../../domain/entities/chat_room.dart';
+import '../../domain/entities/message.dart';
 import '../../domain/repositories/chat_room_repository.dart';
 import '../datasources/chat_room_datasource.dart';
 
@@ -34,4 +35,10 @@ class ChatRoomRepositoryImpl implements ChatRoomRepository {
 
     return data.toEntity();
   });
+
+  @override
+  Future<Either<Failure, List<Message>>> getMessages({required String roomId}) {
+    // TODO: implement getMessages
+    throw UnimplementedError();
+  }
 }

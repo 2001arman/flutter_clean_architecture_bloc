@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../../home/presentation/widgets/avatar_widget.dart';
+import '../../../chat/presentation/widgets/avatar_widget.dart';
 
 class RoomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const RoomAppBar({super.key, required this.name});

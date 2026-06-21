@@ -5,12 +5,12 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/extentions/context_extension.dart';
 import '../../../../core/router/app_router.dart';
-import '../../../home/presentation/bloc/chat_room/chat_room_bloc.dart';
-import '../../../home/presentation/bloc/chat_room/chat_room_event.dart';
+import '../../../chat/presentation/bloc/chat_room/chat_room_bloc.dart';
+import '../../../chat/presentation/bloc/chat_room/chat_room_event.dart';
 import '../bloc/contact_bloc.dart';
 import '../bloc/contact_event.dart';
 import '../bloc/contact_state.dart';
-import '../widgets/contact_list_view.dart';
+import '../views/contact_list_view.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key});

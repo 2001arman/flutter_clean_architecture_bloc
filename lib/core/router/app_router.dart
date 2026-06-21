@@ -7,11 +7,11 @@ import 'package:injectable/injectable.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/contacts/presentation/pages/contact_page.dart';
-import '../../features/home/domain/entities/chat_room.dart';
-import '../../features/home/presentation/bloc/chat_room/chat_room_bloc.dart';
-import '../../features/home/presentation/bloc/chat_room/chat_room_event.dart';
-import '../../features/home/presentation/pages/home_page.dart';
-import '../../features/room/presentation/pages/room_page.dart';
+import '../../features/chat/domain/entities/chat_room.dart';
+import '../../features/chat/presentation/bloc/chat_room/chat_room_bloc.dart';
+import '../../features/chat/presentation/bloc/chat_room/chat_room_event.dart';
+import '../../features/chat/presentation/pages/chat_list_page.dart';
+import '../../features/chat/presentation/pages/detail_chat_page.dart';
 import '../di/injection.dart';
 
 abstract class Routes {
@@ -63,13 +63,13 @@ class AppRouter {
           routes: [
             GoRoute(
               path: Routes.home,
-              builder: (context, state) => const HomePage(),
+              builder: (context, state) => const ChatListPage(),
               routes: [
                 GoRoute(
                   path: 'chat',
                   builder: (context, state) {
                     final room = state.extra as ChatRoom;
-                    return RoomPage(room: room);
+                    return DetailChatPage(room: room);
                   },
                 ),
               ],

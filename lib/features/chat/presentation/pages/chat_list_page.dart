@@ -13,8 +13,8 @@ import '../bloc/user/user_state.dart';
 import '../widgets/chat_rooms_list_view.dart';
 import '../widgets/empty_chat_room_widget.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class ChatListPage extends StatelessWidget {
+  const ChatListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
