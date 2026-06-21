@@ -43,4 +43,13 @@ class ChatRoomRepositoryImpl implements ChatRoomRepository {
     final data = await _datasource.getMessages(roomId);
     return data.map((message) => message.toEntity()).toList();
   });
+
+  @override
+  Future<Either<Failure, Message>> sendMessage({
+    required String roomId,
+    required String text,
+  }) => handleExceptionAsync(() async {
+    final message = await _datasource.sendMessage(roomId: roomId, text: text);
+    return message.toEntity();
+  });
 }

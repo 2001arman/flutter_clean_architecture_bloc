@@ -25,7 +25,7 @@ class DetailChatPage extends StatelessWidget {
         backgroundColor: colors.chatRoomBg,
         resizeToAvoidBottomInset: true,
         appBar: RoomAppBar(name: room.participants.last.name),
-        bottomNavigationBar: ChatInputBar(),
+        bottomNavigationBar: ChatInputBar(roomId: room.id),
         body: MessagesListView(),
       ),
     );

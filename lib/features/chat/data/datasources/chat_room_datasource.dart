@@ -16,6 +16,11 @@ abstract class ChatRoomDatasource {
   });
 
   Future<List<MessageModel>> getMessages(String roomId);
+
+  Future<MessageModel> sendMessage({
+    required String roomId,
+    required String text,
+  });
 }
 
 @LazySingleton(as: ChatRoomDatasource)
@@ -84,14 +89,56 @@ class ChatRoomDataSourceImpl implements ChatRoomDatasource {
   @override
   Future<List<MessageModel>> getMessages(String roomId) async {
     try {
+      final currentUid = _auth.currentUser!.uid;
+
       final data = await _firestore
           .collection('chat_rooms')
           .doc(roomId)
           .collection('messages')
           .get();
       return data.docs
-          .map((message) => MessageModel.fromJson(json: message.data()))
+          .map(
+            (message) => MessageModel.fromJson(
+              json: message.data(),
+              isMe: message.data()['sender_id'] == currentUid,
+            ),
+          )
           .toList();
+    } on FirebaseException catch (e) {
+      e.toAppException();
+    } catch (e) {
+      throw FirebaseFirestoreException(message: 'Unknown Error');
+    }
+  }
+
+  @override
+  Future<MessageModel> sendMessage({
+    required String roomId,
+    required String text,
+  }) async {
+    try {
+      final currentUid = _auth.currentUser!.uid;
+      final roomRef = _firestore.collection("chat_rooms").doc(roomId);
+      final batch = _firestore.batch();
+
+      final MessageModel messageModel = MessageModel(
+        text: text,
+        senderId: currentUid,
+        sentAt: DateTime.now(),
+        isMe: true,
+      );
+
+      final msgRef = roomRef.collection('messages').doc();
+      batch.set(msgRef, messageModel.toJson());
+
+      batch.update(roomRef, {
+        'last_message': messageModel.toJson(),
+        'updated_at': FieldValue.serverTimestamp(),
+      });
+
+      await batch.commit();
+
+      return messageModel;
     } on FirebaseException catch (e) {
       e.toAppException();
     } catch (e) {

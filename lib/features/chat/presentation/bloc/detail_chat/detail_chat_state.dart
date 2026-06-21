@@ -9,6 +9,7 @@ sealed class DetailChatState with _$DetailChatState {
   const factory DetailChatState.initial() = DetailChatInitial;
   const factory DetailChatState.messageLoaded({
     required List<Message> messages,
+    String? error,
   }) = DetailChatMessageLoaded;
 
   const factory DetailChatState.loading() = DetailChatLoading;

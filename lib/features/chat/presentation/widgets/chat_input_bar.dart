@@ -1,9 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../bloc/detail_chat/detail_chat_bloc.dart';
+import '../bloc/detail_chat/detail_chat_event.dart';
 
-class ChatInputBar extends StatelessWidget {
-  const ChatInputBar({super.key});
+class ChatInputBar extends StatefulWidget {
+  const ChatInputBar({super.key, required this.roomId});
+  final String roomId;
+
+  @override
+  State<ChatInputBar> createState() => _ChatInputBarState();
+}
+
+class _ChatInputBarState extends State<ChatInputBar> {
+  final TextEditingController _inputController = TextEditingController();
+
+  @override
+  void dispose() {
+    _inputController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _sendMessage() async {
+    context.read<DetailChatBloc>().add(
+      DetailChatSendMessage(
+        roomId: widget.roomId,
+        text: _inputController.text.trim(),
+      ),
+    );
+
+    _inputController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +46,11 @@ class ChatInputBar extends StatelessWidget {
           children: [
             Expanded(
               child: TextField(
-                controller: TextEditingController(),
+                controller: _inputController,
                 maxLines: 3,
                 minLines: 1,
-
                 decoration: InputDecoration(
+                  hintText: "Type a message...",
                   fillColor: colors.containerBg,
                   contentPadding: const .all(12),
                   border: OutlineInputBorder(
@@ -52,7 +80,7 @@ class ChatInputBar extends StatelessWidget {
               ),
               child: IconButton(
                 icon: Icon(Icons.send, color: cs.onPrimary),
-                onPressed: () async {},
+                onPressed: _sendMessage,
               ),
             ),
           ],

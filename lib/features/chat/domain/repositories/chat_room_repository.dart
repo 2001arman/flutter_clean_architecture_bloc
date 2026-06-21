@@ -12,4 +12,8 @@ abstract class ChatRoomRepository {
     required UserEntity targetUser,
   });
   Future<Either<Failure, List<Message>>> getMessages({required String roomId});
+  Future<Either<Failure, Message>> sendMessage({
+    required String roomId,
+    required String text,
+  });
 }

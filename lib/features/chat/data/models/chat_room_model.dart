@@ -68,5 +68,6 @@ class ChatRoomModel {
     participantIds: participantIds,
     createdAt: createdAt,
     updatedAt: updatedAt,
+    lastMessage: lastMessage?.toEntity(),
   );
 }

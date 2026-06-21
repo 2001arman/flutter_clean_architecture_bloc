@@ -8,6 +8,6 @@ sealed class Message with _$Message {
     required String text,
     required String senderId,
     required DateTime sentAt,
-    required bool isRead,
+    required bool isMe,
   }) = _Message;
 }

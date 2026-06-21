@@ -23,4 +23,8 @@ extension DateExtention on DateTime {
       return DateFormat('dd MMM yyyy').format(this);
     }
   }
+
+  String get hourFormat {
+    return DateFormat('HH:mm').format(this);
+  }
 }
