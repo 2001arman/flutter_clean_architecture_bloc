@@ -7,9 +7,11 @@ import 'package:injectable/injectable.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/contacts/presentation/pages/contact_page.dart';
+import '../../features/home/domain/entities/chat_room.dart';
 import '../../features/home/presentation/bloc/chat_room/chat_room_bloc.dart';
 import '../../features/home/presentation/bloc/chat_room/chat_room_event.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/room/presentation/pages/room_page.dart';
 import '../di/injection.dart';
 
 abstract class Routes {
@@ -17,6 +19,7 @@ abstract class Routes {
   static const login = '/login';
   static const register = '/register';
   static const home = '/home';
+  static const chatRoom = '/home/chat';
   static const contact = '/contact';
 }
 
@@ -61,6 +64,15 @@ class AppRouter {
             GoRoute(
               path: Routes.home,
               builder: (context, state) => const HomePage(),
+              routes: [
+                GoRoute(
+                  path: 'chat',
+                  builder: (context, state) {
+                    final room = state.extra as ChatRoom;
+                    return RoomPage(room: room);
+                  },
+                ),
+              ],
             ),
             GoRoute(
               path: Routes.contact,

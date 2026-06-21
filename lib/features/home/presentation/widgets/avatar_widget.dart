@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 class AvatarWidget extends StatelessWidget {
   const AvatarWidget({
     super.key,
-    this.thumbnailUrl,
     this.displayName,
     this.size = 48,
     this.padding = 10,
   });
 
-  final Uri? thumbnailUrl;
   final String? displayName;
   final double size, padding;
 

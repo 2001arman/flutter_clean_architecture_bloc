@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../auth/domain/entities/user_entity.dart';
+import '../../../home/domain/entities/chat_room.dart';
 
 part 'contact_state.freezed.dart';
 
@@ -12,4 +13,6 @@ sealed class ContactState with _$ContactState {
       ContactLoaded;
   const factory ContactState.failure({required String message}) =
       ContactFailure;
+  const factory ContactState.roomCreated({required ChatRoom room}) =
+      ContactRoomCreated;
 }

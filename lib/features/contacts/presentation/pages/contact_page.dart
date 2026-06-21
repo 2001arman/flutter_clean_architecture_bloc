@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/di/injection.dart';
 import '../../../../core/extentions/context_extension.dart';
+import '../../../../core/router/app_router.dart';
+import '../../../home/presentation/bloc/chat_room/chat_room_bloc.dart';
+import '../../../home/presentation/bloc/chat_room/chat_room_event.dart';
 import '../bloc/contact_bloc.dart';
 import '../bloc/contact_event.dart';
 import '../bloc/contact_state.dart';
@@ -31,14 +35,17 @@ class _ContactView extends StatelessWidget {
         listener: (context, state) {
           if (state is ContactFailure) {
             context.showErrorSnackBar(state.message);
+          } else if (state is ContactRoomCreated) {
+            context.push(Routes.chatRoom, extra: state.room);
+            context.read<ChatRoomBloc>().add(ChatRoomCreated(state.room));
           }
         },
         builder: (context, state) {
-          return state.when(
-            initial: () => SizedBox(),
+          return state.maybeWhen(
             loading: () => Center(child: CircularProgressIndicator()),
             loaded: (data) => ContactListView(contacts: data),
             failure: (failure) => Center(child: Text('Error $failure')),
+            orElse: () => SizedBox(),
           );
           // return Center(child: Text('Contacts page'));
         },

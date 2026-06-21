@@ -2,9 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/usecase/usecase.dart';
-import '../../../../auth/domain/entities/user_entity.dart';
-import '../../../../auth/domain/usecase/load_current_user_use_case.dart';
-import '../../../domain/usecases/create_chat_room_use_case.dart';
 import '../../../domain/usecases/get_chat_room_use_case.dart';
 import 'chat_room_event.dart';
 import 'chat_room_state.dart';
@@ -12,16 +9,10 @@ import 'chat_room_state.dart';
 @injectable
 class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
   final GetChatRoomUseCase _getChatRoomUseCase;
-  final LoadCurrentUserUseCase _loadCurrentUserUseCase;
-  final CreateChatRoomUseCase _createChatRoomUseCase;
 
-  ChatRoomBloc(
-    this._getChatRoomUseCase,
-    this._loadCurrentUserUseCase,
-    this._createChatRoomUseCase,
-  ) : super(ChatRoomInitial()) {
+  ChatRoomBloc(this._getChatRoomUseCase) : super(ChatRoomInitial()) {
     on<ChatRoomLoad>(_loadChatRooms);
-    on<ChatRoomCreate>(_createRoom);
+    on<ChatRoomCreated>(_addRoom);
   }
 
   void _loadChatRooms(ChatRoomEvent event, Emitter<ChatRoomState> emit) async {
@@ -34,38 +25,14 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
     );
   }
 
-  void _createRoom(ChatRoomCreate event, Emitter<ChatRoomState> emit) async {
-    final result = await _loadCurrentUserUseCase(NoParams());
-
-    UserEntity? currentUser;
-
-    result.fold((failure) {}, (user) {
-      currentUser = user;
-    });
-
-    if (currentUser == null) return;
-
-    final chatResult = await _createChatRoomUseCase(
-      CreateChatRoomParam(
-        currentUser: currentUser!,
-        targetUser: event.targetUser,
-      ),
-    );
-
-    chatResult.fold(
-      (l) {
-        return;
-      },
-      (room) {
-        final currentState = state;
-        if (currentState is ChatRoomLoaded) {
-          final isDuplicate = currentState.rooms.contains(room);
-          if (!isDuplicate) {
-            final rooms = [...currentState.rooms, room];
-            emit(ChatRoomState.loaded(rooms: rooms));
-          }
-        }
-      },
-    );
+  void _addRoom(ChatRoomCreated event, Emitter<ChatRoomState> emit) async {
+    final currentState = state;
+    if (currentState is ChatRoomLoaded) {
+      final isDuplicate = currentState.rooms.contains(event.room);
+      if (!isDuplicate) {
+        final rooms = [...currentState.rooms, event.room];
+        emit(ChatRoomState.loaded(rooms: rooms));
+      }
+    }
   }
 }
