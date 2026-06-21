@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/failures.dart';
-import 'package:flutter_clean_architecture_bloc/core/usecase/usecase.dart';
-import 'package:flutter_clean_architecture_bloc/features/contacts/domain/repositories/contact_repository.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecase/usecase.dart';
 import '../../../auth/domain/entities/user_entity.dart';
+import '../repositories/contact_repository.dart';
 
 @lazySingleton
 class GetContactsUseCase implements UseCase<List<UserEntity>, NoParams> {

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/features/contacts/domain/repositories/contact_repository.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../domain/repositories/contact_repository.dart';
 import 'contact_event.dart';
 import 'contact_state.dart';
 

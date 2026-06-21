@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/error_handler.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/failures.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/data/datasources/auth_firebase_datasource.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/entities/user_entity.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/repositories/auth_repository.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../../core/error/error_handler.dart';
+import '../../../../core/error/failures.dart';
+import '../../domain/entities/user_entity.dart';
+import '../../domain/repositories/auth_repository.dart';
+import '../datasources/auth_firebase_datasource.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {

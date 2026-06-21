@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/core/di/injection.dart';
-import 'package:flutter_clean_architecture_bloc/core/extentions/context_extension.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_event.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_state.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../core/di/injection.dart';
+import '../../../../core/extentions/context_extension.dart';
+import '../bloc/auth_bloc.dart';
+import '../bloc/auth_event.dart';
+import '../bloc/auth_state.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/exceptions.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/failures.dart';
+
+import 'exceptions.dart';
+import 'failures.dart';
 
 Either<Failure, T> handleException<T>(T Function() action) {
   try {

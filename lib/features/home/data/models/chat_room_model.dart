@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/data/models/user_model.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/entities/user_entity.dart';
 
+import '../../../auth/data/models/user_model.dart';
+import '../../../auth/domain/entities/user_entity.dart';
 import '../../domain/entities/chat_room.dart';
 import 'message_model.dart';
 

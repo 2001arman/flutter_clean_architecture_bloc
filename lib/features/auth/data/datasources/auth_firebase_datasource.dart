@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/firebase_exception_mapper.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/error/exceptions.dart' as exception;
-import 'package:flutter_clean_architecture_bloc/features/auth/data/models/user_model.dart';
+import '../../../../core/error/firebase_exception_mapper.dart';
+import '../models/user_model.dart';
 
 abstract class AuthFirebaseDataSource {
   Future<UserModel> login({required String email, required String password});

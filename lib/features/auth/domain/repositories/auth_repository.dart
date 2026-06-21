@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/failures.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/entities/user_entity.dart';
+
+import '../../../../core/error/failures.dart';
+import '../entities/user_entity.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, UserEntity>> login({

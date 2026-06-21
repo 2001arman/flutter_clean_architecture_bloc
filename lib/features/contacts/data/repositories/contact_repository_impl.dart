@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/error_handler.dart';
-import 'package:flutter_clean_architecture_bloc/core/error/failures.dart';
-import 'package:flutter_clean_architecture_bloc/features/contacts/data/datasources/contact_datasource.dart';
-import 'package:flutter_clean_architecture_bloc/features/contacts/domain/repositories/contact_repository.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/error/error_handler.dart';
+import '../../../../core/error/failures.dart';
 import '../../../auth/domain/entities/user_entity.dart';
+import '../../domain/repositories/contact_repository.dart';
+import '../datasources/contact_datasource.dart';
 
 @LazySingleton(as: ContactRepository)
 class ContactRepositoryImpl implements ContactRepository {

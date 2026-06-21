@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/core/usecase/usecase.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/usecase/load_current_user_use_case.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/usecase/logout_use_case.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../../core/usecase/usecase.dart';
+import '../../../../auth/domain/usecase/load_current_user_use_case.dart';
+import '../../../../auth/domain/usecase/logout_use_case.dart';
 import 'user_event.dart';
 import 'user_state.dart';
 

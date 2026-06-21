@@ -1,9 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/usecase/login_use_case.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/usecase/register_use_case.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_event.dart';
-import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_state.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../domain/usecase/login_use_case.dart';
+import '../../domain/usecase/register_use_case.dart';
+import 'auth_event.dart';
+import 'auth_state.dart';
 
 @injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

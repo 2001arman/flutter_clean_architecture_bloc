@@ -1,5 +1,6 @@
-import 'package:flutter_clean_architecture_bloc/features/auth/domain/entities/user_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../auth/domain/entities/user_entity.dart';
 
 part 'user_state.freezed.dart';
 
