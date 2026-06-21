@@ -31,19 +31,14 @@ class ChatRoomDataSourceImpl implements ChatRoomDatasource {
           .where('participant_ids', arrayContains: currentUid)
           .get();
 
-      print('cek datanya dont ${data.docs.length}');
-
       return data.docs
           .map(
             (room) => ChatRoomModel.fromJsonId(id: room.id, json: room.data()),
           )
           .toList();
     } on FirebaseException catch (e) {
-      print('cek FirebaseException dont ${e}');
       e.toAppException();
     } catch (e) {
-      print('cek catch dont ${e}');
-
       throw FirebaseFirestoreException(message: 'Unknown Error');
     }
   }

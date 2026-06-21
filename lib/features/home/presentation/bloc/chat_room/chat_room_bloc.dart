@@ -58,10 +58,12 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
       },
       (room) {
         final currentState = state;
-        print('cek currentState $room $currentState');
         if (currentState is ChatRoomLoaded) {
-          final rooms = [...currentState.rooms, room];
-          emit(ChatRoomState.loaded(rooms: rooms));
+          final isDuplicate = currentState.rooms.contains(room);
+          if (!isDuplicate) {
+            final rooms = [...currentState.rooms, room];
+            emit(ChatRoomState.loaded(rooms: rooms));
+          }
         }
       },
     );

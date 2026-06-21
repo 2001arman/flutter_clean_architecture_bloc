@@ -11,6 +11,7 @@ import '../bloc/user/user_bloc.dart';
 import '../bloc/user/user_event.dart';
 import '../bloc/user/user_state.dart';
 import '../widgets/chat_rooms_list_view.dart';
+import '../widgets/empty_chat_room_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -57,7 +58,9 @@ class _HomeView extends StatelessWidget {
             return state.when(
               initial: () => const SizedBox(),
               loading: () => const Center(child: CircularProgressIndicator()),
-              loaded: (rooms) => ChatRoomsListView(rooms: rooms),
+              loaded: (rooms) => rooms.isEmpty
+                  ? EmptyChatRoomWidget()
+                  : ChatRoomsListView(rooms: rooms),
               error: (error) => Center(child: Text(error)),
             );
           },

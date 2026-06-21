@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/chat_room.dart';
+import '../bloc/chat_room/chat_room_bloc.dart';
+import '../bloc/chat_room/chat_room_event.dart';
+import 'chat_item_widget.dart';
 
 class ChatRoomsListView extends StatelessWidget {
   final List<ChatRoom> rooms;
@@ -9,31 +13,12 @@ class ChatRoomsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {},
+      onRefresh: () async =>
+          context.read<ChatRoomBloc>().add(ChatRoomEvent.loadRooms()),
       child: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        itemBuilder: (context, index) => ListTile(
-          title: Row(
-            children: [
-              Container(
-                width: 45,
-                height: 45,
-                padding: EdgeInsets.all(6),
-                margin: EdgeInsets.only(right: 12),
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(Icons.person_2_outlined, color: Colors.black),
-              ),
-              Text(
-                rooms[index].participants.last.name,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
-          onTap: () {},
-        ),
+        padding: EdgeInsets.symmetric(vertical: 8),
+        itemBuilder: (context, index) =>
+            ChatItemWidget(room: rooms[index], onTap: () {}),
         itemCount: rooms.length,
       ),
     );
