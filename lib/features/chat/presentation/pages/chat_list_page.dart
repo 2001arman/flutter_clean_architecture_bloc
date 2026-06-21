@@ -10,7 +10,7 @@ import '../bloc/chat_room/chat_room_state.dart';
 import '../bloc/user/user_bloc.dart';
 import '../bloc/user/user_event.dart';
 import '../bloc/user/user_state.dart';
-import '../widgets/chat_rooms_list_view.dart';
+import '../views/chat_rooms_list_view.dart';
 import '../widgets/empty_chat_room_widget.dart';
 
 class ChatListPage extends StatelessWidget {

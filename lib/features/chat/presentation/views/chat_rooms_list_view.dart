@@ -6,7 +6,7 @@ import '../../../../core/router/app_router.dart';
 import '../../domain/entities/chat_room.dart';
 import '../bloc/chat_room/chat_room_bloc.dart';
 import '../bloc/chat_room/chat_room_event.dart';
-import 'chat_item_widget.dart';
+import '../widgets/chat_item_widget.dart';
 
 class ChatRoomsListView extends StatelessWidget {
   final List<ChatRoom> rooms;

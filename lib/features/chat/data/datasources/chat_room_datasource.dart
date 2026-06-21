@@ -6,6 +6,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/firebase_exception_mapper.dart';
 import '../../../auth/data/models/user_model.dart';
 import '../models/chat_room_model.dart';
+import '../models/message_model.dart';
 
 abstract class ChatRoomDatasource {
   Future<List<ChatRoomModel>> getChatRooms();
@@ -13,6 +14,8 @@ abstract class ChatRoomDatasource {
     required UserModel currentUser,
     required UserModel targetUser,
   });
+
+  Future<List<MessageModel>> getMessages(String roomId);
 }
 
 @LazySingleton(as: ChatRoomDatasource)
@@ -71,6 +74,24 @@ class ChatRoomDataSourceImpl implements ChatRoomDatasource {
         return chatRoom;
       }
       return ChatRoomModel.fromJsonId(id: roomSnap.id, json: roomSnap.data()!);
+    } on FirebaseException catch (e) {
+      e.toAppException();
+    } catch (e) {
+      throw FirebaseFirestoreException(message: 'Unknown Error');
+    }
+  }
+
+  @override
+  Future<List<MessageModel>> getMessages(String roomId) async {
+    try {
+      final data = await _firestore
+          .collection('chat_rooms')
+          .doc(roomId)
+          .collection('messages')
+          .get();
+      return data.docs
+          .map((message) => MessageModel.fromJson(json: message.data()))
+          .toList();
     } on FirebaseException catch (e) {
       e.toAppException();
     } catch (e) {

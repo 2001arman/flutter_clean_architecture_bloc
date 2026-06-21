@@ -37,8 +37,10 @@ class ChatRoomRepositoryImpl implements ChatRoomRepository {
   });
 
   @override
-  Future<Either<Failure, List<Message>>> getMessages({required String roomId}) {
-    // TODO: implement getMessages
-    throw UnimplementedError();
-  }
+  Future<Either<Failure, List<Message>>> getMessages({
+    required String roomId,
+  }) => handleExceptionAsync(() async {
+    final data = await _datasource.getMessages(roomId);
+    return data.map((message) => message.toEntity()).toList();
+  });
 }
