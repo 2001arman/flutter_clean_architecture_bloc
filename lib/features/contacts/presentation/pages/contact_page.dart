@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/core/di/injection.dart';
-import 'package:flutter_clean_architecture_bloc/core/extentions/context_extension.dart';
-import 'package:flutter_clean_architecture_bloc/features/contacts/presentation/widgets/contact_list_view.dart';
 
+import '../../../../core/di/injection.dart';
+import '../../../../core/extentions/context_extension.dart';
 import '../bloc/contact_bloc.dart';
 import '../bloc/contact_event.dart';
 import '../bloc/contact_state.dart';
+import '../widgets/contact_list_view.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key});

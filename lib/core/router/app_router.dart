@@ -1,11 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/pages/register_page.dart';
 import 'package:flutter_clean_architecture_bloc/features/contacts/presentation/pages/contact_page.dart';
 import 'package:flutter_clean_architecture_bloc/features/home/presentation/pages/home_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../features/home/presentation/bloc/chat_room/chat_room_bloc.dart';
+import '../../features/home/presentation/bloc/chat_room/chat_room_event.dart';
+import '../di/injection.dart';
 
 abstract class Routes {
   static const splash = '/';
@@ -45,13 +50,23 @@ class AppRouter {
           path: Routes.register,
           builder: (context, state) => const RegisterPage(),
         ),
-        GoRoute(
-          path: Routes.home,
-          builder: (context, state) => const HomePage(),
-        ),
-        GoRoute(
-          path: Routes.contact,
-          builder: (context, state) => const ContactPage(),
+
+        ShellRoute(
+          builder: (context, state, child) => BlocProvider(
+            create: (context) =>
+                getIt<ChatRoomBloc>()..add(ChatRoomEvent.loadRooms()),
+            child: child,
+          ),
+          routes: [
+            GoRoute(
+              path: Routes.home,
+              builder: (context, state) => const HomePage(),
+            ),
+            GoRoute(
+              path: Routes.contact,
+              builder: (context, state) => const ContactPage(),
+            ),
+          ],
         ),
       ],
     );

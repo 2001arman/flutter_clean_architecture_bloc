@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/features/contacts/presentation/bloc/contact_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/features/contacts/presentation/bloc/contact_event.dart';
 
-import '../../../auth/domain/entities/user_entity.dart';
-import '../../../home/presentation/bloc/chat_room/chat_room_bloc.dart';
-import '../../../home/presentation/bloc/chat_room/chat_room_event.dart';
+import '../../domain/entities/chat_room.dart';
 
-class ContactListView extends StatelessWidget {
-  const ContactListView({super.key, required this.contacts});
-  final List<UserEntity> contacts;
+class ChatRoomsListView extends StatelessWidget {
+  final List<ChatRoom> rooms;
+  const ChatRoomsListView({super.key, required this.rooms});
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => context.read<ContactBloc>().add(ContactLoad()),
+      onRefresh: () async {},
       child: ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         itemBuilder: (context, index) => ListTile(
@@ -32,16 +27,14 @@ class ContactListView extends StatelessWidget {
                 child: Icon(Icons.person_2_outlined, color: Colors.black),
               ),
               Text(
-                contacts[index].name,
+                rooms[index].participants.last.name,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ],
           ),
-          onTap: () => context.read<ChatRoomBloc>().add(
-            ChatRoomEvent.createRoom(contacts[index]),
-          ),
+          onTap: () {},
         ),
-        itemCount: contacts.length,
+        itemCount: rooms.length,
       ),
     );
   }

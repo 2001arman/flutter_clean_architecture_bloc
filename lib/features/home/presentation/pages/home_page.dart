@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/core/di/injection.dart';
-import 'package:flutter_clean_architecture_bloc/core/extentions/context_extension.dart';
-import 'package:flutter_clean_architecture_bloc/core/router/app_router.dart';
-import 'package:flutter_clean_architecture_bloc/features/home/presentation/bloc/user/user_bloc.dart';
-import 'package:flutter_clean_architecture_bloc/features/home/presentation/bloc/user/user_event.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/di/injection.dart';
+import '../../../../core/extentions/context_extension.dart';
+import '../../../../core/router/app_router.dart';
+import '../bloc/chat_room/chat_room_bloc.dart';
+import '../bloc/chat_room/chat_room_state.dart';
+import '../bloc/user/user_bloc.dart';
+import '../bloc/user/user_event.dart';
 import '../bloc/user/user_state.dart';
+import '../widgets/chat_rooms_list_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -49,7 +52,16 @@ class _HomeView extends StatelessWidget {
             const SizedBox(width: 12),
           ],
         ),
-        body: Center(child: Text("Home Page Bosque")),
+        body: BlocBuilder<ChatRoomBloc, ChatRoomState>(
+          builder: (context, state) {
+            return state.when(
+              initial: () => const SizedBox(),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              loaded: (rooms) => ChatRoomsListView(rooms: rooms),
+              error: (error) => Center(child: Text(error)),
+            );
+          },
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => context.push(Routes.contact),
           child: Icon(Icons.add),

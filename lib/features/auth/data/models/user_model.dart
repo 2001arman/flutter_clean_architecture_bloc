@@ -15,4 +15,8 @@ class UserModel {
   }
 
   UserEntity toEntity() => UserEntity(uid: uid, name: name, email: email);
+
+  factory UserModel.fromEntity(UserEntity entity) {
+    return UserModel(uid: entity.uid, email: entity.email, name: entity.name);
+  }
 }
