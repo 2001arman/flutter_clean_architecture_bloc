@@ -5,7 +5,7 @@ import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/
 import 'package:flutter_clean_architecture_bloc/features/auth/presentation/bloc/auth_state.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(cache: true)
+@injectable
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase _loginUseCase;
   final RegisterUseCase _registerUseCase;

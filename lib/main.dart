@@ -4,6 +4,8 @@ import 'package:flutter_clean_architecture_bloc/core/di/injection.dart';
 import 'package:flutter_clean_architecture_bloc/core/router/app_router.dart';
 import 'package:flutter_clean_architecture_bloc/firebase_options.dart';
 
+import 'core/theme/app_theme.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -17,6 +19,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(routerConfig: getIt<AppRouter>().router);
+    return MaterialApp.router(
+      routerConfig: getIt<AppRouter>().router,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.system,
+    );
   }
 }
