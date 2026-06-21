@@ -4,5 +4,5 @@ part 'contact_event.freezed.dart';
 
 @freezed
 sealed class ContactEvent with _$ContactEvent {
-  const factory ContactEvent.loadContacts() = LoadContacts;
+  const factory ContactEvent.loadContacts() = ContactLoad;
 }

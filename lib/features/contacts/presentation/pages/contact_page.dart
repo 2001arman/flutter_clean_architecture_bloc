@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_architecture_bloc/core/di/injection.dart';
 import 'package:flutter_clean_architecture_bloc/core/extentions/context_extension.dart';
-import 'package:flutter_clean_architecture_bloc/features/contacts/presentation/bloc/contact_event.dart';
 import 'package:flutter_clean_architecture_bloc/features/contacts/presentation/widgets/contact_list_view.dart';
 
 import '../bloc/contact_bloc.dart';
+import '../bloc/contact_event.dart';
 import '../bloc/contact_state.dart';
 
 class ContactPage extends StatelessWidget {
@@ -14,7 +14,7 @@ class ContactPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ContactBloc>()..add(LoadContacts()),
+      create: (context) => getIt<ContactBloc>()..add(ContactLoad()),
       child: _ContactView(),
     );
   }

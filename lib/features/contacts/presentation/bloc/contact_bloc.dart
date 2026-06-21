@@ -10,7 +10,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
   final ContactRepository _repository;
 
   ContactBloc(this._repository) : super(ContactInitial()) {
-    on<LoadContacts>(_onLoadContacts);
+    on<ContactLoad>(_onLoadContacts);
   }
 
   void _onLoadContacts(ContactEvent event, Emitter<ContactState> emit) async {
