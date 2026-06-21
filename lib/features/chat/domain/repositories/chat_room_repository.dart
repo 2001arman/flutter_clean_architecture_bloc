@@ -16,4 +16,6 @@ abstract class ChatRoomRepository {
     required String roomId,
     required String text,
   });
+
+  Stream<List<Message>> streamMessage({required String roomId});
 }

@@ -20,7 +20,7 @@ class DetailChatPage extends StatelessWidget {
 
     return BlocProvider(
       create: (context) =>
-          getIt<DetailChatBloc>()..add(DetailChatEvent.getMessages(room.id)),
+          getIt<DetailChatBloc>()..add(DetailChatEvent.streamMessages(room.id)),
       child: Scaffold(
         backgroundColor: colors.chatRoomBg,
         resizeToAvoidBottomInset: true,

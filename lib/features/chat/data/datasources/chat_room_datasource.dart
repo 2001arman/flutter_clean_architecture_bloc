@@ -21,6 +21,7 @@ abstract class ChatRoomDatasource {
     required String roomId,
     required String text,
   });
+  Stream<List<MessageModel>> streamMessage({required String roomId});
 }
 
 @LazySingleton(as: ChatRoomDatasource)
@@ -144,5 +145,26 @@ class ChatRoomDataSourceImpl implements ChatRoomDatasource {
     } catch (e) {
       throw FirebaseFirestoreException(message: 'Unknown Error');
     }
+  }
+
+  @override
+  Stream<List<MessageModel>> streamMessage({required String roomId}) {
+    final currentUid = _auth.currentUser!.uid;
+    return _firestore
+        .collection('chat_rooms')
+        .doc(roomId)
+        .collection("messages")
+        .orderBy("sent_at", descending: true)
+        .snapshots()
+        .map(
+          (messages) => messages.docs
+              .map(
+                (message) => MessageModel.fromJson(
+                  json: message.data(),
+                  isMe: message.data()['sender_id'] == currentUid,
+                ),
+              )
+              .toList(),
+        );
   }
 }

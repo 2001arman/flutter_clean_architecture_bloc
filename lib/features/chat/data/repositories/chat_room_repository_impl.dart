@@ -52,4 +52,11 @@ class ChatRoomRepositoryImpl implements ChatRoomRepository {
     final message = await _datasource.sendMessage(roomId: roomId, text: text);
     return message.toEntity();
   });
+
+  @override
+  Stream<List<Message>> streamMessage({required String roomId}) => _datasource
+      .streamMessage(roomId: roomId)
+      .map(
+        (messages) => messages.map((message) => message.toEntity()).toList(),
+      );
 }
