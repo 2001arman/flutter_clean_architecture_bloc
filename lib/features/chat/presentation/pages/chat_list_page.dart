@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/bloc/theme_cubit.dart';
 import '../../../../core/extentions/context_extension.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../auth/presentation/bloc/user_cubit.dart';
@@ -31,7 +32,20 @@ class ChatListPage extends StatelessWidget {
               loaded: (user) => Text("Welcome ${user.name}"),
             ),
           ),
+
           actions: [
+            BlocBuilder<ThemeCubit, ThemeMode>(
+              builder: (context, state) {
+                return IconButton(
+                  onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+                  icon: Icon(
+                    state == ThemeMode.light
+                        ? Icons.light_mode
+                        : Icons.dark_mode,
+                  ),
+                );
+              },
+            ),
             IconButton(
               onPressed: () => context.read<UserCubit>().logout(),
               icon: Icon(Icons.logout),
