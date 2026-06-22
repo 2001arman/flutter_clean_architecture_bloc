@@ -72,12 +72,12 @@ class _EmptyChatMessageWidget extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           const Text(
-            'Belum ada percakapan',
+            'No messages yet',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
           Text(
-            'Mulai obrolan dengan rekan kerja atau tim\nAnda untuk berkolaborasi.',
+            'Send the first message to start the conversation.',
             textAlign: TextAlign.center,
             style: TextStyle(color: cs.onSurfaceVariant),
           ),

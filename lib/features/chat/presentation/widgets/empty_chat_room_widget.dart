@@ -25,12 +25,12 @@ class EmptyChatRoomWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
                 const Text(
-                  'Belum ada percakapan',
+                  'No conversations yet',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Mulai obrolan dengan rekan kerja atau tim\nAnda untuk berkolaborasi.',
+                  'Start a new conversation to connect with your team.',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: cs.onSurfaceVariant),
                 ),
