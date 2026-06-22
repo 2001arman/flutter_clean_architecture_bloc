@@ -7,6 +7,8 @@ import '../entities/message.dart';
 
 abstract class ChatRoomRepository {
   Future<Either<Failure, List<ChatRoom>>> getChatRooms();
+  Stream<List<ChatRoom>> streamChatRooms();
+
   Future<Either<Failure, ChatRoom>> createChatRoom({
     required UserEntity currentUser,
     required UserEntity targetUser,

@@ -24,6 +24,11 @@ class ChatRoomRepositoryImpl implements ChatRoomRepository {
       });
 
   @override
+  Stream<List<ChatRoom>> streamChatRooms() => _datasource.streamChatRooms().map(
+    (rooms) => rooms.map((room) => room.toEntity()).toList(),
+  );
+
+  @override
   Future<Either<Failure, ChatRoom>> createChatRoom({
     required UserEntity currentUser,
     required UserEntity targetUser,

@@ -10,6 +10,8 @@ import '../models/message_model.dart';
 
 abstract class ChatRoomDatasource {
   Future<List<ChatRoomModel>> getChatRooms();
+  Stream<List<ChatRoomModel>> streamChatRooms();
+
   Future<ChatRoomModel> createChatRoom({
     required UserModel currentUser,
     required UserModel targetUser,
@@ -45,6 +47,30 @@ class ChatRoomDataSourceImpl implements ChatRoomDatasource {
             (room) => ChatRoomModel.fromJsonId(id: room.id, json: room.data()),
           )
           .toList();
+    } on FirebaseException catch (e) {
+      e.toAppException();
+    } catch (e) {
+      throw FirebaseFirestoreException(message: 'Unknown Error');
+    }
+  }
+
+  @override
+  Stream<List<ChatRoomModel>> streamChatRooms() {
+    try {
+      final currentUid = _auth.currentUser!.uid;
+
+      return _firestore
+          .collection('chat_rooms')
+          .where('participant_ids', arrayContains: currentUid)
+          .snapshots()
+          .map(
+            (rooms) => rooms.docs
+                .map(
+                  (room) =>
+                      ChatRoomModel.fromJsonId(id: room.id, json: room.data()),
+                )
+                .toList(),
+          );
     } on FirebaseException catch (e) {
       e.toAppException();
     } catch (e) {

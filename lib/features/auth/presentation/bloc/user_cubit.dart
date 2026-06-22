@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/usecase/usecase.dart';
 import '../../domain/entities/user_entity.dart';
@@ -16,6 +17,7 @@ sealed class UserState with _$UserState {
   const factory UserState.error({required String message}) = UserError;
 }
 
+@injectable
 class UserCubit extends Cubit<UserState> {
   final LogoutUseCase _logoutUseCase;
   final LoadCurrentUserUseCase _loadCurrentUserUseCase;

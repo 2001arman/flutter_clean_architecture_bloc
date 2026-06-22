@@ -42,7 +42,7 @@ class ChatListPage extends StatelessWidget {
         ),
         body: RefreshIndicator(
           onRefresh: () async =>
-              context.read<ChatRoomBloc>().add(ChatRoomEvent.loadRooms()),
+              context.read<ChatRoomBloc>().add(ChatRoomEvent.streamRooms()),
           child: BlocBuilder<ChatRoomBloc, ChatRoomState>(
             builder: (context, state) {
               return state.when(

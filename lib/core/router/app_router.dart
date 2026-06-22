@@ -60,7 +60,7 @@ class AppRouter {
             providers: [
               BlocProvider(
                 create: (context) =>
-                    getIt<ChatRoomBloc>()..add(ChatRoomEvent.loadRooms()),
+                    getIt<ChatRoomBloc>()..add(ChatRoomEvent.streamRooms()),
               ),
               BlocProvider(
                 create: (context) => getIt<UserCubit>()..loadCurrentUser(),

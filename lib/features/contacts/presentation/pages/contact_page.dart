@@ -5,8 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/di/injection.dart';
 import '../../../../core/extentions/context_extension.dart';
 import '../../../../core/router/app_router.dart';
-import '../../../chat/presentation/bloc/chat_room/chat_room_bloc.dart';
-import '../../../chat/presentation/bloc/chat_room/chat_room_event.dart';
 import '../bloc/contact_bloc.dart';
 import '../bloc/contact_event.dart';
 import '../bloc/contact_state.dart';
@@ -40,7 +38,6 @@ class _ContactView extends StatelessWidget {
               context.showErrorSnackBar(state.message);
             } else if (state is ContactRoomCreated) {
               context.push(Routes.chatRoom, extra: state.room);
-              context.read<ChatRoomBloc>().add(ChatRoomCreated(state.room));
             }
           },
           builder: (context, state) {
