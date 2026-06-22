@@ -12,7 +12,10 @@ class EmptyChatRoomWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset('assets/empty-personal-chat.svg'),
+          SvgPicture.asset(
+            'assets/empty_room.svg',
+            width: MediaQuery.widthOf(context) * 0.7,
+          ),
           const SizedBox(height: 32),
           const Text(
             'Belum ada percakapan',

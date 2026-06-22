@@ -31,3 +31,5 @@ class DetailChatPage extends StatelessWidget {
     );
   }
 }
+
+
