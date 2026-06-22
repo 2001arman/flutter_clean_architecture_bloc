@@ -16,7 +16,6 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
   ChatRoomBloc(this._getChatRoomUseCase, this._streamChatRoomUseCase)
     : super(ChatRoomInitial()) {
     on<ChatRoomLoad>(_loadChatRooms);
-    // on<ChatRoomCreated>(_addRoom);
     on<ChatRoomStream>(_streamChatRooms);
   }
 
@@ -42,15 +41,4 @@ class ChatRoomBloc extends Bloc<ChatRoomEvent, ChatRoomState> {
       (rooms) => emit(ChatRoomState.loaded(rooms: rooms)),
     );
   }
-
-  // void _addRoom(ChatRoomCreated event, Emitter<ChatRoomState> emit) async {
-  //   final currentState = state;
-  //   if (currentState is ChatRoomLoaded) {
-  //     final isDuplicate = currentState.rooms.contains(event.room);
-  //     if (!isDuplicate) {
-  //       final rooms = [...currentState.rooms, event.room];
-  //       emit(ChatRoomState.loaded(rooms: rooms));
-  //     }
-  //   }
-  // }
 }
