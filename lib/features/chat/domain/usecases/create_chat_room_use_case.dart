@@ -1,14 +1,14 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/error/failures.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../../core/error/failures.dart';
+import '../../../../../core/usecase/usecase.dart';
 import '../../../auth/domain/entities/user_entity.dart';
-import '../../../chat/domain/entities/chat_room.dart';
+import '../entities/chat_room.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../chat/domain/repositories/chat_room_repository.dart';
+import '../repositories/chat_room_repository.dart';
 
 part 'create_chat_room_use_case.freezed.dart';
 

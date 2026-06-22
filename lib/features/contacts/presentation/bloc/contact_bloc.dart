@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 import '../../../auth/domain/usecase/load_current_user_use_case.dart';
-import '../../domain/usecases/create_chat_room_use_case.dart';
+import '../../../chat/domain/usecases/create_chat_room_use_case.dart';
 import '../../domain/repositories/contact_repository.dart';
 import 'contact_event.dart';
 import 'contact_state.dart';
