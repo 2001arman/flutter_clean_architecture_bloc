@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../features/auth/presentation/bloc/user_cubit.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
-import '../../features/chat/presentation/bloc/user/user_bloc.dart';
-import '../../features/chat/presentation/bloc/user/user_event.dart';
 import '../../features/contacts/presentation/pages/contact_page.dart';
 import '../../features/chat/domain/entities/chat_room.dart';
 import '../../features/chat/presentation/bloc/chat_room/chat_room_bloc.dart';
@@ -64,8 +63,7 @@ class AppRouter {
                     getIt<ChatRoomBloc>()..add(ChatRoomEvent.loadRooms()),
               ),
               BlocProvider(
-                create: (context) =>
-                    getIt<UserBloc>()..add(UserEvent.loadCurrentUser()),
+                create: (context) => getIt<UserCubit>()..loadCurrentUser(),
               ),
             ],
 

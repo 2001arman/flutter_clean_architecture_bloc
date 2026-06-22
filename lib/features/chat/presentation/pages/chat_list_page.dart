@@ -4,12 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/extentions/context_extension.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../auth/presentation/bloc/user_cubit.dart';
 import '../bloc/chat_room/chat_room_bloc.dart';
 import '../bloc/chat_room/chat_room_event.dart';
 import '../bloc/chat_room/chat_room_state.dart';
-import '../bloc/user/user_bloc.dart';
-import '../bloc/user/user_event.dart';
-import '../bloc/user/user_state.dart';
 import '../views/chat_rooms_list_view.dart';
 import '../views/loading_chat_rooms_view.dart';
 import '../widgets/empty_chat_room_widget.dart';
@@ -19,7 +17,7 @@ class ChatListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserBloc, UserState>(
+    return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
         state.mapOrNull(
           error: (failure) => context.showErrorSnackBar(failure.message),
@@ -27,15 +25,15 @@ class ChatListPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: BlocBuilder<UserBloc, UserState>(
+          title: BlocBuilder<UserCubit, UserState>(
             builder: (context, state) => state.maybeWhen(
               orElse: () => Text("Welcome"),
-              loaded: (user, _) => Text("Welcome ${user.name}"),
+              loaded: (user) => Text("Welcome ${user.name}"),
             ),
           ),
           actions: [
             IconButton(
-              onPressed: () => context.read<UserBloc>().add(UserEvent.logout()),
+              onPressed: () => context.read<UserCubit>().logout(),
               icon: Icon(Icons.logout),
               color: Colors.red,
             ),

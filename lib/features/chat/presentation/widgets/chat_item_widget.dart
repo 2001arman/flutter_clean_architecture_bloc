@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/extentions/date_extention.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../auth/presentation/bloc/user_cubit.dart';
 import '../../domain/entities/chat_room.dart';
-import '../bloc/user/user_bloc.dart';
-import '../bloc/user/user_state.dart';
 import 'avatar_widget.dart';
 import 'room_name_widget.dart';
 
@@ -19,7 +18,7 @@ class ChatItemWidget extends StatelessWidget {
     final colors = context.appColors;
 
     return ListTile(
-      leading: BlocBuilder<UserBloc, UserState>(
+      leading: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           return state.maybeMap(
             loaded: (loaded) {
