@@ -9,8 +9,10 @@ part 'contact_state.freezed.dart';
 sealed class ContactState with _$ContactState {
   const factory ContactState.initial() = ContactInitial;
   const factory ContactState.loading() = ContactLoading;
-  const factory ContactState.loaded({required List<UserEntity> contacts}) =
-      ContactLoaded;
+  const factory ContactState.loaded({
+    required List<UserEntity> contacts,
+    @Default(false) bool creatingRoom,
+  }) = ContactLoaded;
   const factory ContactState.failure({required String message}) =
       ContactFailure;
   const factory ContactState.roomCreated({required ChatRoom room}) =

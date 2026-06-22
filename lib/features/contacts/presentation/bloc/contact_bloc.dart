@@ -38,6 +38,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     final currentState = state;
 
     if (currentState is! ContactLoaded) return;
+    emit(ContactLoaded(contacts: currentState.contacts, creatingRoom: true));
 
     final result = await _loadCurrentUserUseCase(NoParams());
 
@@ -63,7 +64,9 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       (room) {
         emit(ContactRoomCreated(room: room));
 
-        emit(currentState);
+        emit(
+          ContactLoaded(contacts: currentState.contacts, creatingRoom: false),
+        );
       },
     );
   }

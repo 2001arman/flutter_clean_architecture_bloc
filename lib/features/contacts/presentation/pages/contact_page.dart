@@ -46,7 +46,8 @@ class _ContactView extends StatelessWidget {
           builder: (context, state) {
             return state.maybeWhen(
               loading: () => const LoadingContactView(),
-              loaded: (data) => ContactListView(contacts: data),
+              loaded: (data, creatingRoom) =>
+                  ContactListView(contacts: data, isCreatingRoom: creatingRoom),
               failure: (failure) => Center(child: Text('Error $failure')),
               orElse: () => SizedBox(),
             );
