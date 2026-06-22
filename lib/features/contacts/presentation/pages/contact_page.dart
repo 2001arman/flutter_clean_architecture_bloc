@@ -11,6 +11,7 @@ import '../bloc/contact_bloc.dart';
 import '../bloc/contact_event.dart';
 import '../bloc/contact_state.dart';
 import '../views/contact_list_view.dart';
+import '../views/loading_contact_view.dart';
 
 class ContactPage extends StatelessWidget {
   const ContactPage({super.key});
@@ -31,24 +32,27 @@ class _ContactView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Contacts")),
-      body: BlocConsumer<ContactBloc, ContactState>(
-        listener: (context, state) {
-          if (state is ContactFailure) {
-            context.showErrorSnackBar(state.message);
-          } else if (state is ContactRoomCreated) {
-            context.push(Routes.chatRoom, extra: state.room);
-            context.read<ChatRoomBloc>().add(ChatRoomCreated(state.room));
-          }
-        },
-        builder: (context, state) {
-          return state.maybeWhen(
-            loading: () => Center(child: CircularProgressIndicator()),
-            loaded: (data) => ContactListView(contacts: data),
-            failure: (failure) => Center(child: Text('Error $failure')),
-            orElse: () => SizedBox(),
-          );
-          // return Center(child: Text('Contacts page'));
-        },
+      body: RefreshIndicator(
+        onRefresh: () async => context.read<ContactBloc>().add(ContactLoad()),
+        child: BlocConsumer<ContactBloc, ContactState>(
+          listener: (context, state) {
+            if (state is ContactFailure) {
+              context.showErrorSnackBar(state.message);
+            } else if (state is ContactRoomCreated) {
+              context.push(Routes.chatRoom, extra: state.room);
+              context.read<ChatRoomBloc>().add(ChatRoomCreated(state.room));
+            }
+          },
+          builder: (context, state) {
+            return state.maybeWhen(
+              loading: () => const LoadingContactView(),
+              loaded: (data) => ContactListView(contacts: data),
+              failure: (failure) => Center(child: Text('Error $failure')),
+              orElse: () => SizedBox(),
+            );
+            // return Center(child: Text('Contacts page'));
+          },
+        ),
       ),
     );
   }

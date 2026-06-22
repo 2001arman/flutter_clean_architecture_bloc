@@ -127,7 +127,7 @@ class AppColors extends ThemeExtension<AppColors> {
     blueContainer: Color(0xFF4F7CF6),
     biometricIdleBg: Color(0xFFF9FAFB),
     biometricVerifyBg: Color(0xFFECFDF5),
-    biometricIconActive: Color(0xFF2ECC9B),
+    biometricIconActive: Color.fromARGB(255, 159, 218, 199),
     biometricSubtitle: Color(0xFF8A94A6),
     fileBubbleReceiver: Color(0xFF64B5F6), // blue.shade400
   );

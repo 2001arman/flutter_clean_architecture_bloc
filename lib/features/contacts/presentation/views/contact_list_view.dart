@@ -12,18 +12,15 @@ class ContactListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async => context.read<ContactBloc>().add(ContactLoad()),
-      child: ListView.builder(
-        padding: EdgeInsets.symmetric(vertical: 8),
-        itemBuilder: (context, index) => ContactItemWidget(
-          user: contacts[index],
-          onTap: () => context.read<ContactBloc>().add(
-            ContactEvent.createRoom(contacts[index]),
-          ),
+    return ListView.builder(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      itemBuilder: (context, index) => ContactItemWidget(
+        user: contacts[index],
+        onTap: () => context.read<ContactBloc>().add(
+          ContactEvent.createRoom(contacts[index]),
         ),
-        itemCount: contacts.length,
       ),
+      itemCount: contacts.length,
     );
   }
 }
